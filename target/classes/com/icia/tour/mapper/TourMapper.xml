@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Tour">
+	<!-- 아이디 중복 체크 -->
+	<select id="idCheck" parameterType="String" resultType="String">
+		SELECT
+		MID FROM MEMBERS WHERE MID = #{mId}
+	</select>
+
+	<!-- 회원 가입 -->
+	<insert id="join" parameterType="tour">
+		INSERT INTO MEMBERS
+		VALUES
+		(#{mId}, #{mPw}, #{mName}, #{mBirth}, #{mGender}, #{mEmail},
+		#{mPhone}, #{mAddr}, #{mProfileName})
+	</insert>
+
+	<!-- 회원 정보 조회 -->
+	<select id="mView" parameterType="String" resultType="tour">
+		SELECT *
+		FROM MEMBERS WHERE MID = #{mId}
+	</select>
+	
+	<insert id="contact" parameterType="inquiry">
+		INSERT INTO INQUIRY
+		VALUES
+		(INQ_SEQ.NEXTVAL,
+		#{IName},#{IContents},#{IMail},0)
+	</insert>
+
+	<!-- 패키지 데이터 삽입 -->
+	<insert id="insertPackage" parameterType="python">
+		INSERT INTO PACKAGES
+		VALUES(PACK_SEQ.NEXTVAL, #{course_title}, 0, 0, #{course_addr},
+		#{course_img}, #{img1}, #{img2}, #{img3})
+	</insert>
+
+	<!-- 패키지 리스트 조회 -->
+	<select id="packageList" parameterType="paging"
+		resultType="package">
+		SELECT * FROM PACKAGES WHERE PNUM BETWEEN #{startRow} AND
+		#{endRow}
+	</select>
+
+	<select id="IView" parameterType="int" resultType="inquiry">
+		SELECT *
+		FROM
+		INQUIRY WHERE INUM= #{INum}
+	</select>
+
+	<select id="adminContactList" parameterType="paging"
+		resultType="inquiry">
+		SELECT * FROM INQUIRYLIST WHERE RN BETWEEN #{startRow} AND
+		#{endRow}
+	</select>
+	<!-- 패키지 상세 정보 조회 -->
+	<select id="detailList" parameterType="String"
+		resultType="package">
+		SELECT * FROM PACKAGES WHERE PNAME = #{pname}
+	</select>
+
+	<select id="ICtn" resultType="int">
+		SELECT COUNT(*) FROM INQUIRY
+	</select>
+	<select id="listCount" resultType="int">
+		SELECT COUNT(*) FROM PACKAGES
+	</select>
+
+	<select id="searchList" parameterType="search"
+		resultType="package">
+		SELECT * FROM PACKAGES WHERE ${category} LIKE
+		'%${keyword}%'
+	</select>
+
+	<select id="mList" parameterType="paging" resultType="tour">
+		SELECT *
+		FROM MEMBERLIST WHERE RN BETWEEN #{startRow} AND #{endRow}
+	</select>
+
+	<select id="mCount" resultType="int">
+		SELECT COUNT(*) FROM MEMBERS
+	</select>
+
+	<select id="mSearch" parameterType="search" resultType="tour"> SELECT *
+		FROM MEMBERS WHERE ${category} LIKE '%${keyword}%' </select>
+		
+	<select id="iSearch" parameterType="search" resultType="inquiry"> SELECT *
+		FROM INQUIRY WHERE ${category} LIKE '%${keyword}%' </select>
+	<update id="tourHit" parameterType="String"> UPDATE PACKAGES SET PHIT=PHIT+1 WHERE PNAME = #{pname} </update>
+	<select id="commentList" parameterType="int" resultType="comment"> SELECT * FROM COMMENTS WHERE CPNUM = #{cpnum} ORDER BY CNUM DESC </select>
+	<insert id="commentWrite" parameterType="comment"> INSERT INTO COMMENTS VALUES(COMMENT_SEQ.NEXTVAL, #{cpnum}, #{cwriter}, #{ccontents}, SYSDATE) </insert>
+	<update id="detailmodify" parameterType="comment"> UPDATE COMMENTS SET CCONTENTS = #{ccontents} WHERE CNUM = #{cnum} AND CPNUM=#{cpnum} </update>
+	<delete id="detaildelete" parameterType="comment"> DELETE FROM COMMENTS WHERE CNUM = #{cnum} AND CPNUM=#{cpnum} </delete>
+
+</mapper>

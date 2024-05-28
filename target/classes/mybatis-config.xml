@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+	
+		<typeAlias type="com.icia.tour.dto.TourDTO" alias="tour" />
+		<typeAlias type="com.icia.tour.dto.PackageDTO" alias="package" />
+		<typeAlias type="com.icia.tour.dto.PythonDTO" alias="python"/>
+		<typeAlias type="com.icia.tour.dto.PageDTO" alias="paging"/>
+		<typeAlias type="com.icia.tour.dto.SearchDTO" alias="search"/>
+		<typeAlias type="com.icia.tour.dto.InquiryDTO" alias="inquiry"/>
+		<typeAlias type="com.icia.tour.dto.CommentDTO" alias="comment"/>
+	</typeAliases>
+</configuration>
